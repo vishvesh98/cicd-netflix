@@ -5,8 +5,9 @@ pipeline {
         stage('Clone Repository') {
             steps {
                 echo 'Cloning repository from main branch...'
-                git branch: 'main', 
-                    url: 'https://github.com/vishvesh98/cicd-netflix'
+               branch: 'main',
+                    url: 'https://github.com/vishvesh98/cicd-netflix.git',
+                    credentialsId: 'jenkins-access-token'  // use your credentials ID
             }
         }
         
