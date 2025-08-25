@@ -3,12 +3,12 @@ pipeline {
     
     stages {
         stage('Clone Repository') {
-            steps {
-                echo 'Cloning repository from main branch...'
-               branch: 'main',
-                    url: 'https://github.com/vishvesh98/cicd-netflix.git',
-                    credentialsId: 'jenkins-access-token'  // use your credentials ID
-            }
+          steps {
+    echo 'Cloning repository from main branch...'
+    git branch: 'main',
+        url: 'https://github.com/vishvesh98/cicd-netflix.git',
+        credentialsId: 'jenkins-access-token'
+}
         }
         
         stage('Verify Docker') {
