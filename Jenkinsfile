@@ -6,7 +6,7 @@ pipeline {
             steps {
                 echo 'Cloning repository from main branch...'
                 git branch: 'main', 
-                    url: 'https://github.com/MihirSolankii/Netflix_CI_CD'
+                    url: 'https://github.com/vishvesh98/cicd-netflix'
             }
         }
         
