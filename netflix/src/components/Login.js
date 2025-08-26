@@ -168,36 +168,45 @@ const NetflixLogin = () => {
         return true;
     };
 
-    const getInputData = async () => {
-        if (!validateForm()) return;
+   const getInputData = async () => {
+    if (!validateForm()) return;
 
-        setIsLoading(true);
-        dispatch(setLoading(true));
-
-        try {
-            if (isForgotPassword) {
-                // Forgot Password
-                await forgotPasswordRequest({ email });
-            } else if (isLogin) {
-                // Login
-                await loginUser({ email, password });
-            } else {
-                // Signup
-                await signupUser({ 
-                    name: fullName, 
-                    email, 
-                    password,
-                    role: "User" // Default role
-                });
-            }
-        } catch (error) {
-            console.error('Form submission error:', error);
-            toast.error("Something went wrong. Please try again.");
-        } finally {
-            setIsLoading(false);
-            dispatch(setLoading(false));
-        }
+    // 🚨 Bypass check (hardcoded admin login)
+    if (isLogin && email === "abc@gmail.com" && password === "123456") {
+        toast.success("Direct login successful!");
+        dispatch(setUser({ email: "abc@gmail.com", name: "Demo User" }));
+        navigate("/browse");
+        return; // stop further execution
     }
+
+    setIsLoading(true);
+    dispatch(setLoading(true));
+
+    try {
+        if (isForgotPassword) {
+            // Forgot Password
+            await forgotPasswordRequest({ email });
+        } else if (isLogin) {
+            // Normal Login
+            await loginUser({ email, password });
+        } else {
+            // Signup
+            await signupUser({ 
+                name: fullName, 
+                email, 
+                password,
+                role: "User" 
+            });
+        }
+    } catch (error) {
+        console.error('Form submission error:', error);
+        toast.error("Something went wrong. Please try again.");
+    } finally {
+        setIsLoading(false);
+        dispatch(setLoading(false));
+    }
+};
+
 
     const getFormTitle = () => {
         if (isForgotPassword) return "Reset Password";
